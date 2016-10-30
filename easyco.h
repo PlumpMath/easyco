@@ -6,7 +6,7 @@
 extern "C" {
 #endif
 
-typedef Coroutine easyco_coroutine_t; 
+typedef int64_t easyco_coroutine_t; 
 
 typedef CoroutineAttr easyco_coroutine_attr_t;
 
@@ -22,9 +22,9 @@ int easyco_run();
 
 int easyco_unit();
 
-void easyco_resume(easyco_coroutine_t* c);
+void easyco_resume(easyco_coroutine_t c);
 
-void eaysco_yield(easyco_coroutine_t* c);
+void eaysco_yield(easyco_coroutine_t c);
 
 
 #ifdef __cplusplus

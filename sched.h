@@ -1,20 +1,20 @@
 #ifndef _EASYCO_SCHED_H_
 #define _EASYCO_SCHED_H_
 
-
 class SchedTask;
 
 class SchedMgr {
 public:
+
+    typedef std::function<void(void* args)> func_type;
+
     void init();
     void resume(Coroutine* c);
     void yield(Coroutine* c);
-
-    template<class Function, class ... Args>
-    std::share_ptr<Coroutine> create(Function&& f, Args&&... args);
+    int64_t create(Coroutine* c, const std::SchedMgr::func_type& func);
 private:
-    void post_g_to_task(Coroutine* c);
-    std::vector<std::share_ptr<SchedTask>> sched_task;
+    int post_g_to_task(Coroutine* c);
+    std::vector<SchedTask*> sched_task;
 };
 
 
