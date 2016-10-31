@@ -1,8 +1,9 @@
 #include "easyco.h"
-#include "sched.h"
+#include "options.h"
+#include "easyco_sched.h"
 
-int easyco_init(easyco_options* opt) {
-    gDefaultOptions = new gDefaultOptions();
+int easyco_init(easyco_options_t* opt) {
+    gDefaultOptions = new EasycoOptions();
     if (!opt) {
         opt = gDefaultOptions;
     } else {
@@ -18,8 +19,13 @@ int easyco_set_opt(easyco_options_t* opt) {
 
 }
 
-int easyco_create(easyco_coroutine_t* c, const easyco_coroutine_attr_t* attr, void *(*start_routine)(void *), void *restrict arg) {
-
+int easyco_create(easyco_coroutine_t* c, const easyco_coroutine_attr_t* attr, void (*start_routine)(void *), void *restrict arg) {
+    gSchedMgr->create(
+        c,
+        [arg] -> (){
+            start_routine(arg);
+        }
+    );
 }
 
 int easyco_run() {

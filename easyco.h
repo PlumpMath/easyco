@@ -1,6 +1,10 @@
 #ifndef _EASYCO_EASYCO_H_
 #define _EASYCO_EASYCO_H_
 
+#include <stdint.h>
+
+struct CoroutineAttr;
+struct EasycoOptions;
 
 #ifdef __cplusplus
 extern "C" {
@@ -10,13 +14,13 @@ typedef int64_t easyco_coroutine_t;
 
 typedef CoroutineAttr easyco_coroutine_attr_t;
 
-typedef Options easyco_options_t;
+typedef EasycoOptions easyco_options_t;
 
-int easyco_init(easyco_options* opt);
+int easyco_init(easyco_options_t* opt);
 
 int easyco_set_opt(easyco_options_t* opt);
 
-int easyco_create(easyco_coroutine_t* c, const easyco_coroutine_attr_t* attr, void *(*start_routine)(void *), void *restrict arg);
+int easyco_create(easyco_coroutine_t* c, const easyco_coroutine_attr_t* attr, void (*start_routine)(void *), void* arg);
 
 int easyco_run();
 
